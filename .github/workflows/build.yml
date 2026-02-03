@@ -84,7 +84,7 @@ jobs:
             awk -v list="$list" '
               {
                 while (match($0, /([0-9]+\.[0-9]+\.[0-9]+\.[0-9]+\/[0-9]+)/, m)) {
-                  printf("/ip firewall address-list add list=%s address=%s comment=rbgeoip\n", list, m[1])
+                  printf(":do { /ip firewall address-list add list=%s address=%s comment=rbgeoip } on-error={}\n", list, m[1])
                   $0 = substr($0, RSTART+RLENGTH)
                 }
               }
@@ -99,62 +99,6 @@ jobs:
               gen_rsc "$f" "$out" "VPN"
             done < <(find text -type f \( -name "*.txt" -o -name "*.lst" \) | sort)
           fi
-
-      - name: Build merged & deduped VPN list (extra)
-        shell: bash
-        run: |
-          set -Eeuo pipefail
-          cd ./output || exit 1
-          mkdir -p mikrotik
-          
-          # Какие текстовые списки объединяем (можешь расширять)
-          SOURCES=(
-            "text/re-filter.txt"
-            "text/google.txt"
-            "text/facebook.txt"
-            "text/telegram.txt"
-          )
-          
-          MERGED_LST="mikrotik/target.txt"
-          MERGED_RSC="mikrotik/target.rsc"
-          
-          tmp="$(mktemp)"
-          
-          # 1) склеиваем существующие файлы
-          for f in "${SOURCES[@]}"; do
-            if [[ -f "$f" ]]; then
-              cat "$f" >> "$tmp"
-              echo "" >> "$tmp"
-            else
-              echo "WARN: missing $f, skip"
-            fi
-          done
-          
-          # 2) вытаскиваем CIDR (как у тебя в gen_rsc), дедуп
-          awk '
-            {
-              while (match($0, /([0-9]+\.[0-9]+\.[0-9]+\.[0-9]+\/[0-9]+)/, m)) {
-                print m[1]
-                $0 = substr($0, RSTART+RLENGTH)
-              }
-            }
-          ' "$tmp" | sort -u > "$MERGED_LST"
-          
-          rm -f "$tmp"
-          
-          echo "Merged unique CIDR count: $(wc -l < "$MERGED_LST")"
-          
-          # 3) генерим единый .rsc (list=VPN) без дублей
-          {
-            echo "# Generated: $(date -u +'%Y-%m-%dT%H:%M:%SZ')"
-            echo "# Source  : merged from: ${SOURCES[*]}"
-            echo "# Entries : $(wc -l < "$MERGED_LST")"
-            echo ""
-          } > "$MERGED_RSC"
-          
-          awk '
-            { printf "/ip firewall address-list add list=VPN address=%s comment=rbgeoip\n", $0 }
-          ' "$MERGED_LST" >> "$MERGED_RSC"
 
       - name: Git push assets to "release" branch
         run: |
