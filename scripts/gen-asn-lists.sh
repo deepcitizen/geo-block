@@ -7,13 +7,19 @@ set -euo pipefail
 # Анонсируемые префиксы берутся "вживую" из RIPEstat. Скрипт рассчитан на
 # запуск внутри GitHub Actions после того, как geoip уже сгенерировал ./output.
 #
-# Формат asn-lists.json: { "<имя_списка>": [ASN, ASN, ...], ... }
-# Имя списка используется как имя address-list в Mikrotik.
+# Формат asn-lists.json: { "<имя_файла>": [ASN, ASN, ...], ... }
+# Имя используется только для имён выходных файлов; в самих .rsc все адреса
+# попадают в общий address-list (LIST_NAME) с общим comment (COMMENT) — так же,
+# как в шаге "Generate .rsc from all lists".
 #
-# Использование: scripts/gen-asn-lists.sh [config] [output_dir]
+# Использование: scripts/gen-asn-lists.sh [config] [output_dir] [list_name] [comment]
 
 CONFIG="${1:-asn-lists.json}"
 OUT_DIR="${2:-./output}"
+
+# Общий address-list и comment — как в шаге "Generate .rsc from all lists".
+LIST_NAME="${3:-to_vpn}"
+COMMENT="${4:-rbgeoip}"
 
 MIKROTIK_DIR="${OUT_DIR}/mikrotik"
 TEXT_DIR="${OUT_DIR}/asn"
@@ -64,8 +70,8 @@ for name in $(jq -r 'keys[]' "$CONFIG"); do
   } > "$v4_rsc"
   while IFS='|' read -r prefix asn; do
     [[ -z "$prefix" ]] && continue
-    printf ':do { /ip firewall address-list add list=%s address=%s comment=AS%s } on-error={}\n' \
-      "$name" "$prefix" "$asn" >> "$v4_rsc"
+    printf ':do { /ip firewall address-list add list=%s address=%s comment=%s } on-error={}\n' \
+      "$LIST_NAME" "$prefix" "$COMMENT" >> "$v4_rsc"
   done <<< "$v4_prefixes"
 
   # --- Mikrotik IPv6 .rsc ---
@@ -78,8 +84,8 @@ for name in $(jq -r 'keys[]' "$CONFIG"); do
     } > "$v6_rsc"
     while IFS='|' read -r prefix asn; do
       [[ -z "$prefix" ]] && continue
-      printf ':do { /ipv6 firewall address-list add list=%s address=%s comment=AS%s } on-error={}\n' \
-        "$name" "$prefix" "$asn" >> "$v6_rsc"
+      printf ':do { /ipv6 firewall address-list add list=%s address=%s comment=%s } on-error={}\n' \
+        "$LIST_NAME" "$prefix" "$COMMENT" >> "$v6_rsc"
     done <<< "$v6_prefixes"
   fi
 
