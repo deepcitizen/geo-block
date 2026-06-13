@@ -56,6 +56,29 @@
 - `surge` - SURGE формат
 - `nginx` - allow и deny правила для nginx
 
+## Списки адресов по ASN
+
+GitHub Actions дополнительно формирует списки адресов для указанных ASN. Перечень
+задаётся в [`asn-lists.json`](./asn-lists.json) в формате `"<имя_списка>": [ASN, ...]`.
+На данный момент добавлен только `AS714` (Apple):
+
+```json
+{
+  "apple": [714]
+}
+```
+
+Анонсируемые префиксы берутся из [RIPEstat](https://stat.ripe.net/). Для каждого
+имени списка генерируются:
+
+- `mikrotik/<имя>.rsc` - Mikrotik address-list (IPv4)
+- `mikrotik/<имя>-v6.rsc` - Mikrotik address-list (IPv6), если есть IPv6-префиксы
+- `asn/<имя>.txt` - плоский список префиксов (IPv4 + IPv6)
+
+В Mikrotik `.rsc` имя `address-list` совпадает с именем из конфига, а в `comment`
+проставляется исходный `ASxxx`. Чтобы добавить новый ASN — допишите его в
+`asn-lists.json`.
+
 
 # Cкачать
 

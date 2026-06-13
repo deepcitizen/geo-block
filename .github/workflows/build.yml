@@ -100,6 +100,10 @@ jobs:
             done < <(find text -type f \( -name "*.txt" -o -name "*.lst" \) | sort)
           fi
 
+      - name: Generate ASN address lists
+        run: |
+          ./scripts/gen-asn-lists.sh ./asn-lists.json ./output
+
       - name: Git push assets to "release" branch
         run: |
           cd output || exit 1
@@ -125,7 +129,7 @@ jobs:
           rm -rf ./output/GeoLite2-*.csv
           rm -rf ./output/GeoLite2-*.mmdb
           rm -rf ./output/GeoLite2-*.sha256sum
-          rm -rf ./output/{clash,dat,mrs,nginx,srs,surge,text,mikrotik}
+          rm -rf ./output/{clash,dat,mrs,nginx,srs,surge,text,mikrotik,asn}
 
       - name: Upload files to GitHub release
         uses: svenstaro/upload-release-action@v2
