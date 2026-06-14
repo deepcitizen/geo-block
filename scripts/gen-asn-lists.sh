@@ -70,7 +70,7 @@ for name in $(jq -r 'keys[]' "$CONFIG"); do
   } > "$v4_rsc"
   while IFS='|' read -r prefix asn; do
     [[ -z "$prefix" ]] && continue
-    printf ':do { /ip firewall address-list add list=%s address=%s comment=%s } on-error={}\n' \
+    printf ':do { /ip firewall address-list add list=%s address=%s comment=%s timeout=30d } on-error={}\n' \
       "$LIST_NAME" "$prefix" "$COMMENT" >> "$v4_rsc"
   done <<< "$v4_prefixes"
 
@@ -84,7 +84,7 @@ for name in $(jq -r 'keys[]' "$CONFIG"); do
     } > "$v6_rsc"
     while IFS='|' read -r prefix asn; do
       [[ -z "$prefix" ]] && continue
-      printf ':do { /ipv6 firewall address-list add list=%s address=%s comment=%s } on-error={}\n' \
+      printf ':do { /ipv6 firewall address-list add list=%s address=%s comment=%s timeout=30d } on-error={}\n' \
         "$LIST_NAME" "$prefix" "$COMMENT" >> "$v6_rsc"
     done <<< "$v6_prefixes"
   fi
