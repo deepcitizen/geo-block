@@ -1,0 +1,41 @@
+# Generated: 2026-09-05T15:01:38Z
+# Source : text/va.txt
+
+:do { /ip firewall address-list add list=to_vpn address=2.56.112.0/24 comment=rbgeoip timeout=30d } on-error={}
+:do { /ip firewall address-list add list=to_vpn address=45.138.10.172/30 comment=rbgeoip timeout=30d } on-error={}
+:do { /ip firewall address-list add list=to_vpn address=57.79.224.0/20 comment=rbgeoip timeout=30d } on-error={}
+:do { /ip firewall address-list add list=to_vpn address=104.28.15.69/32 comment=rbgeoip timeout=30d } on-error={}
+:do { /ip firewall address-list add list=to_vpn address=104.28.15.70/31 comment=rbgeoip timeout=30d } on-error={}
+:do { /ip firewall address-list add list=to_vpn address=104.28.62.97/32 comment=rbgeoip timeout=30d } on-error={}
+:do { /ip firewall address-list add list=to_vpn address=104.28.62.98/32 comment=rbgeoip timeout=30d } on-error={}
+:do { /ip firewall address-list add list=to_vpn address=104.28.98.74/32 comment=rbgeoip timeout=30d } on-error={}
+:do { /ip firewall address-list add list=to_vpn address=104.28.186.166/31 comment=rbgeoip timeout=30d } on-error={}
+:do { /ip firewall address-list add list=to_vpn address=104.28.186.168/31 comment=rbgeoip timeout=30d } on-error={}
+:do { /ip firewall address-list add list=to_vpn address=104.28.218.219/32 comment=rbgeoip timeout=30d } on-error={}
+:do { /ip firewall address-list add list=to_vpn address=104.28.218.220/31 comment=rbgeoip timeout=30d } on-error={}
+:do { /ip firewall address-list add list=to_vpn address=104.28.218.222/32 comment=rbgeoip timeout=30d } on-error={}
+:do { /ip firewall address-list add list=to_vpn address=104.28.250.219/32 comment=rbgeoip timeout=30d } on-error={}
+:do { /ip firewall address-list add list=to_vpn address=104.28.250.220/31 comment=rbgeoip timeout=30d } on-error={}
+:do { /ip firewall address-list add list=to_vpn address=104.28.250.222/32 comment=rbgeoip timeout=30d } on-error={}
+:do { /ip firewall address-list add list=to_vpn address=140.248.37.78/31 comment=rbgeoip timeout=30d } on-error={}
+:do { /ip firewall address-list add list=to_vpn address=140.248.56.235/32 comment=rbgeoip timeout=30d } on-error={}
+:do { /ip firewall address-list add list=to_vpn address=140.248.57.235/32 comment=rbgeoip timeout=30d } on-error={}
+:do { /ip firewall address-list add list=to_vpn address=140.248.58.235/32 comment=rbgeoip timeout=30d } on-error={}
+:do { /ip firewall address-list add list=to_vpn address=140.248.59.235/32 comment=rbgeoip timeout=30d } on-error={}
+:do { /ip firewall address-list add list=to_vpn address=140.248.60.235/32 comment=rbgeoip timeout=30d } on-error={}
+:do { /ip firewall address-list add list=to_vpn address=140.248.61.235/32 comment=rbgeoip timeout=30d } on-error={}
+:do { /ip firewall address-list add list=to_vpn address=140.248.62.235/32 comment=rbgeoip timeout=30d } on-error={}
+:do { /ip firewall address-list add list=to_vpn address=140.248.63.235/32 comment=rbgeoip timeout=30d } on-error={}
+:do { /ip firewall address-list add list=to_vpn address=146.75.166.140/31 comment=rbgeoip timeout=30d } on-error={}
+:do { /ip firewall address-list add list=to_vpn address=146.75.186.46/31 comment=rbgeoip timeout=30d } on-error={}
+:do { /ip firewall address-list add list=to_vpn address=162.120.215.7/32 comment=rbgeoip timeout=30d } on-error={}
+:do { /ip firewall address-list add list=to_vpn address=162.120.216.130/32 comment=rbgeoip timeout=30d } on-error={}
+:do { /ip firewall address-list add list=to_vpn address=172.225.96.160/27 comment=rbgeoip timeout=30d } on-error={}
+:do { /ip firewall address-list add list=to_vpn address=172.225.145.64/27 comment=rbgeoip timeout=30d } on-error={}
+:do { /ip firewall address-list add list=to_vpn address=172.225.158.48/28 comment=rbgeoip timeout=30d } on-error={}
+:do { /ip firewall address-list add list=to_vpn address=176.31.103.102/32 comment=rbgeoip timeout=30d } on-error={}
+:do { /ip firewall address-list add list=to_vpn address=185.17.220.0/22 comment=rbgeoip timeout=30d } on-error={}
+:do { /ip firewall address-list add list=to_vpn address=193.43.102.0/23 comment=rbgeoip timeout=30d } on-error={}
+:do { /ip firewall address-list add list=to_vpn address=193.43.128.0/22 comment=rbgeoip timeout=30d } on-error={}
+:do { /ip firewall address-list add list=to_vpn address=194.50.99.237/32 comment=rbgeoip timeout=30d } on-error={}
+:do { /ip firewall address-list add list=to_vpn address=212.77.0.0/19 comment=rbgeoip timeout=30d } on-error={}
